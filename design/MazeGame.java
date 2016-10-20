@@ -1,6 +1,8 @@
 package design;
 
+import static design.Direction.*;
 import design.abstruct.factory.MazeFactory;
+import design.builder.MazeBuilder;
 
 public class MazeGame {
 
@@ -16,15 +18,15 @@ public class MazeGame {
 		maze.addRoom(room1);
 		maze.addRoom(room2);
 
-		room1.setSide(Direction.North, new Wall());
-		room1.setSide(Direction.East, door);
-		room1.setSide(Direction.South, new Wall());
-		room1.setSide(Direction.West, new Wall());
+		room1.setSide(North, new Wall());
+		room1.setSide(East, door);
+		room1.setSide(South, new Wall());
+		room1.setSide(West, new Wall());
 
-		room2.setSide(Direction.North, new Wall());
-		room2.setSide(Direction.East, new Wall());
-		room2.setSide(Direction.South, new Wall());
-		room2.setSide(Direction.West, door);
+		room2.setSide(North, new Wall());
+		room2.setSide(East, new Wall());
+		room2.setSide(South, new Wall());
+		room2.setSide(West, door);
 
 		return maze;
 	}
@@ -41,16 +43,30 @@ public class MazeGame {
 		maze.addRoom(room1);
 		maze.addRoom(room2);
 		
-		room1.setSide(Direction.North, factory.makeWall());
-		room1.setSide(Direction.East, door);
-		room1.setSide(Direction.South, factory.makeWall());
-		room1.setSide(Direction.West, factory.makeWall());
+		room1.setSide(North, factory.makeWall());
+		room1.setSide(East, door);
+		room1.setSide(South, factory.makeWall());
+		room1.setSide(West, factory.makeWall());
 
-		room2.setSide(Direction.North, factory.makeWall());
-		room2.setSide(Direction.East, factory.makeWall());
-		room2.setSide(Direction.South, factory.makeWall());
-		room2.setSide(Direction.West, door);
+		room2.setSide(North, factory.makeWall());
+		room2.setSide(East, factory.makeWall());
+		room2.setSide(South, factory.makeWall());
+		room2.setSide(West, door);
 		
 		return maze;
+	}
+	
+	/**
+	 * 生成器方式
+	 * 隐藏迷宫的内部表示——即定义房间、门和墙的那些类——以及这些部件是如何组装最终的迷宫的
+	 */
+	public Maze createMaze(MazeBuilder builder) {
+		builder.buildMaze();
+		
+		builder.buildRoom(1);
+		builder.buildRoom(2);
+		builder.buildDoor(1, 2, West);
+		
+		return builder.getMaze();
 	}
 }
