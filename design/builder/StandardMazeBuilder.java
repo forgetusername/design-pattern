@@ -18,7 +18,7 @@ public class StandardMazeBuilder implements MazeBuilder {
 	@Override
 	public void buildRoom(int roomNo) {
 		// 创建房间并初始化周围的墙
-		if (currentMaze.getRoom(roomNo) != null) {
+		if (currentMaze.getRoom(roomNo) == null) {
 			Room room = new Room(roomNo);
 			currentMaze.addRoom(room);
 			
